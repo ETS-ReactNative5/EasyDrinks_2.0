@@ -1,0 +1,33 @@
+Como criar a conta no Google:
+
+https://www.youtube.com/watch?v=P1UOgg8kVjs
+Enviar login e senha para Adekz
+
+
+
+
+
+
+Como criar a conta na Apple
+
+https://appleid.apple.com/account?localang=en_US&appId=632&returnURL=https%3A%2F%2Fidmsa.apple.com%2FIDMSWebAuth%2Flogin.html%3FappIdKey%3D891bd3417a7776362562d2197f89480a8547b108fd934911bcbea0110d07f757%26path%3D%2F%2Fenroll%2F%26language%3DUS-EN%26baseURL%3Dhttps%3A%2F%2Fdeveloper.apple.com%2F%26rv%3D1
+
+
+https://www.youtube.com/watch?v=WeZEcG-dgRw
+Enviar login e senha para Adekz
+
+
+
+
+
+Como criar o App no Facebook
+
+https://developers.facebook.com/
+
+1. Pegar a senha do facebook do cliente:
+2. Fazer junto ao cliente presencialmente ou via telefone.
+https://www.youtube.com/watch?v=NGQSl0wrpR4
+
+
+
+
