@@ -13,7 +13,5 @@ yarn install
 ```
 
 ```sh
-react-native run-ios
-or
-react-native run-android
+react-native run-ios or react-native run-android
 ```
