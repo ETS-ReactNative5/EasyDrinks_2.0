@@ -18,7 +18,10 @@ import {fonts, colors} from '../../styles';
 
 import TouchableScale from 'react-native-touchable-scale';
 export const FilterModal = (props) => {
+  const {modalVisible = false, filter = {}} = props;
+
   // State
+  const [temporaryFilter, setTemporaryFilter] = useState(filter);
   const [glassFilter, setGlassFilter] = useState('');
   const [igradienteFilter, setIgradienteFilter] = useState('');
 
@@ -26,21 +29,20 @@ export const FilterModal = (props) => {
     (state) => state.filters,
   );
 
-  const {modalVisible = false, filter = {}} = props;
+  function _toogleModal() {
+    setGlassFilter('');
+    setTemporaryFilter(filter);
+    setIgradienteFilter('');
+    props._setModal();
+  }
 
   return (
     <Modal
       animationType="fade"
       transparent
       visible={modalVisible}
-      onRequestClose={props._onCancel}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          setGlassFilter('');
-          setIgradienteFilter('');
-          props._onCancel();
-        }}
-        useForeground>
+      onRequestClose={_toogleModal}>
+      <TouchableWithoutFeedback onPress={_toogleModal} useForeground>
         <View style={styles.containerBlack}>
           <TouchableWithoutFeedback onPress={() => false} useForeground>
             <View style={styles.containerWhite}>
@@ -49,9 +51,12 @@ export const FilterModal = (props) => {
                   <Text style={styles.textLabelInfos}>Filter by: </Text>
                   <TouchableScale
                     onPress={() => {
-                      setGlassFilter('');
-                      setIgradienteFilter('');
-                      props._onCancel();
+                      if (temporaryFilter.filterValue !== '') {
+                        setGlassFilter('');
+                        setIgradienteFilter('');
+                        setTemporaryFilter({filterValue: '', type: ''});
+                        props._onClear();
+                      }
                     }}
                     activeScale={0.99}
                     style={styles.buttonClearFilter}>
@@ -60,7 +65,7 @@ export const FilterModal = (props) => {
                         styles.textClearFilter,
                         {
                           color:
-                            props.filter.filterValue !== ''
+                            temporaryFilter.filterValue !== ''
                               ? colors.primary
                               : '#ddd',
                         },
@@ -107,10 +112,15 @@ export const FilterModal = (props) => {
                                 label={item.strGlass}
                                 style={styles.buttonFastFilter}
                                 onPress={() =>
-                                  props._setFilter(item.strGlass, 'glass')
+                                  setTemporaryFilter({
+                                    filterValue: item.strGlass,
+                                    type: 'glass',
+                                  })
                                 }
                                 colorNoChecked={'#F0F0F0'}
-                                checked={item.strGlass === filter.filterValue}
+                                checked={
+                                  item.strGlass === temporaryFilter.filterValue
+                                }
                               />
                             ))}
                         </View>
@@ -157,13 +167,14 @@ export const FilterModal = (props) => {
                                 style={styles.buttonFastFilter}
                                 colorNoChecked={'#F0F0F0'}
                                 onPress={() =>
-                                  props._setFilter(
-                                    item.strIngredient1,
-                                    'igradient',
-                                  )
+                                  setTemporaryFilter({
+                                    filterValue: item.strIngredient1,
+                                    type: 'igradient',
+                                  })
                                 }
                                 checked={
-                                  item.strIngredient1 === filter.filterValue
+                                  item.strIngredient1 ===
+                                  temporaryFilter.filterValue
                                 }
                               />
                             ))}
@@ -175,17 +186,15 @@ export const FilterModal = (props) => {
               </View>
               <View style={styles.footerModal}>
                 <TouchableScale
-                  onPress={() => {
-                    setGlassFilter('');
-                    setIgradienteFilter('');
-                    props._onCancel(true);
-                  }}
+                  onPress={_toogleModal}
                   activeScale={0.99}
                   style={styles.btnCancel}>
                   <Text style={styles.textCancel}>Cancel</Text>
                 </TouchableScale>
                 <TouchableScale
-                  onPress={props._onFilter}
+                  onPress={() => {
+                    props._onFilter(true, temporaryFilter);
+                  }}
                   activeScale={0.99}
                   style={styles.btnApplyFiter}>
                   <Text style={styles.textApplyFilter}>Apply Filter</Text>

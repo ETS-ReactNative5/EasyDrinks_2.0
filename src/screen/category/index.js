@@ -5,14 +5,24 @@ import styles from './styles';
 
 import {Container, ChooseCategoryButton} from '../../components';
 
+import LottieView from 'lottie-react-native';
+import DrinkAnimation from '../../assets/animations/drink_animation.json';
+
 export default function Category({navigation}) {
   return (
     <Container noHeader>
       <View style={styles.containerHeaderCategory}>
-        <View>
-          <Image
-            source={require('../../assets/icons/pina-colada.png')}
+        <View
+          style={{
+            position: 'absolute',
+            left: -15,
+            top: -18,
+          }}>
+          <LottieView
+            source={DrinkAnimation}
             style={styles.iconLogo}
+            autoPlay
+            loop
           />
         </View>
         <View style={styles.containerTextHeaderCategory}>

@@ -50,7 +50,7 @@ export default function Drink_Details({route, navigation}) {
 
     return arrayIgradients.length > 0 ? arrayIgradients : <View />;
   }
-
+  console.log({drink});
   return (
     <GradientContainer style={{flex: 1}}>
       <ParallaxScroll
@@ -135,14 +135,14 @@ export default function Drink_Details({route, navigation}) {
                 </View>
               </View>
 
-              {drink.strInstructions && (
+              {drink.strInstructions !== undefined && (
                 <View style={styles.bodyInfos}>
                   {drink.strInstructions !== '' ? (
                     <Text style={styles.textInfos}>
                       {drink.strInstructions}
                     </Text>
                   ) : (
-                    <Text style={styles.textInfos}>'No instructions.'</Text>
+                    <Text style={styles.textInfos}> No instructions. </Text>
                   )}
                 </View>
               )}

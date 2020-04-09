@@ -2,7 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {View, FlatList, Image, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {getDrinksAlcoholic, getDrinksByCategory} from '../../services';
+import {
+  getDrinksGlass,
+  getDrinksAlcoholic,
+  getDrinksByCategory,
+  getDrinksIgradient,
+} from '../../services';
 
 import styles from './styles';
 import {styles as stylesDefault, colors, fonts} from '../../styles';
@@ -44,6 +49,7 @@ export default function Drinks({route, navigation}) {
   async function _onInit() {
     try {
       const drinksResponse = await getDrinksByCategory(category);
+      console.log({drinksResponse});
       setDrinks(drinksResponse.data?.drinks);
       setLoading(false);
     } catch (error) {
@@ -51,28 +57,31 @@ export default function Drinks({route, navigation}) {
     }
   }
 
-  function _onFilter() {
-    if (filter.type === 'glass') {
-      // this.props._getDrinksGlass(
-      //   this.state.filter.filterValue.split(' ').join('_'),
-      // );
-    } else {
-      // this.props._getDrinksIgradient(
-      //   this.state.filter.filterValue.split(' ').join('_'),
-      // );
+  async function _onFilter(setModal = true, filter = null) {
+    setModal && _setModal();
+    filter && setFilter(filter);
+
+    setLoading(true);
+    try {
+      const filterValue = filter.filterValue.split(' ').join('_');
+      let drinksResponse = [];
+      if (filter.type === 'glass') {
+        drinksResponse = await getDrinksGlass(filterValue);
+      } else {
+        drinksResponse = await getDrinksIgradient(filterValue);
+      }
+
+      setDrinks(drinksResponse.data?.drinks);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
-
-    _setModal();
   }
 
-  function _onCancel(refresh = false) {
-    refresh && _refresh();
+  function _onClear() {
+    _setModal();
     setFilter({filterValue: '', type: ''});
-    _setModal();
-  }
-
-  function _setFilter(filterValue, type) {
-    setFilter({filterValue, type});
+    _setFastFilter(fastFilter);
   }
 
   async function _setFastFilter(fastFilter = 'Alcoholic') {
@@ -148,24 +157,35 @@ export default function Drinks({route, navigation}) {
       </View>
       <View style={styles.bodyWhite}>
         <View style={styles.containerFastFilter}>
-          <ButtonFilterFast
-            label={'Alcoholic'}
-            style={styles.buttonFastFilter}
-            onPress={() => _setFastFilter('Alcoholic')}
-            checked={fastFilter === 'Alcoholic'}
-          />
-          <ButtonFilterFast
-            label={'Non Alcoholic'}
-            style={styles.buttonFastFilter}
-            onPress={() => _setFastFilter('Non_Alcoholic')}
-            checked={fastFilter === 'Non_Alcoholic'}
-          />
-          <ButtonFilterFast
-            label={'Optional Alcohol'}
-            style={styles.buttonFastFilter}
-            onPress={() => _setFastFilter('Optional_alcohol')}
-            checked={fastFilter === 'Optional_alcohol'}
-          />
+          {filter.filterValue === '' ? (
+            <>
+              <ButtonFilterFast
+                label={'Alcoholic'}
+                style={styles.buttonFastFilter}
+                onPress={() => _setFastFilter('Alcoholic')}
+                checked={fastFilter === 'Alcoholic'}
+              />
+              <ButtonFilterFast
+                label={'Non Alcoholic'}
+                style={styles.buttonFastFilter}
+                onPress={() => _setFastFilter('Non_Alcoholic')}
+                checked={fastFilter === 'Non_Alcoholic'}
+              />
+              <ButtonFilterFast
+                label={'Optional Alcohol'}
+                style={styles.buttonFastFilter}
+                onPress={() => _setFastFilter('Optional_alcohol')}
+                checked={fastFilter === 'Optional_alcohol'}
+              />
+            </>
+          ) : (
+            <ButtonFilterFast
+              label={filter.filterValue}
+              style={styles.buttonFastFilter}
+              onPress={_setModal}
+              checked={true}
+            />
+          )}
         </View>
         <FlatList
           data={nameFilter !== '' ? arrayDrinksFilterByName : drinks}
@@ -205,9 +225,8 @@ export default function Drinks({route, navigation}) {
       <FilterModal
         filter={filter}
         _onFilter={_onFilter}
-        _onCancel={_onCancel}
+        _onClear={_onClear}
         _setModal={_setModal}
-        _setFilter={_setFilter}
         modalVisible={modalVisible}
       />
     </GradientContainer>
