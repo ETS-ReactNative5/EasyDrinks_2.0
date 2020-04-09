@@ -6,7 +6,7 @@ import styles from './styles';
 import {colors} from '../../styles';
 
 export const ListEmpty = (props) => {
-  let {loading} = props;
+  const {loading} = props;
 
   if (loading) {
     return <View />;

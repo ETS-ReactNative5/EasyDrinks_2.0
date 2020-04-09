@@ -7,7 +7,7 @@ import stylesDefault from './styles';
 import TouchableScale from 'react-native-touchable-scale';
 
 export const CardImage = (props) => {
-  let {item = {}} = props;
+  const {item = {}} = props;
 
   return (
     <View

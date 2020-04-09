@@ -20,7 +20,7 @@ export default function Drink_Details({route, navigation}) {
   async function _onInit(id) {
     try {
       const res = await getDrinkById(id);
-      console.log({res});
+
       setLoading(false);
 
       setDrink(res.data?.drinks[0]);

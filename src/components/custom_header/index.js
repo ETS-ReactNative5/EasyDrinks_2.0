@@ -7,7 +7,7 @@ import {Icon} from '..';
 import TouchableScale from 'react-native-touchable-scale';
 
 export const CustomHeader = (props) => {
-  let {label} = props;
+  const {label} = props;
 
   return (
     <View style={{justifyContent: 'flex-start'}}>

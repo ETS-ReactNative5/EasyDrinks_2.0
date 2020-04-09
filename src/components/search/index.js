@@ -3,10 +3,8 @@ import {View, TextInput} from 'react-native';
 
 import styles from './styles';
 
-import {colors} from '../../styles';
-
 export const Search = (props) => {
-  let {value = ''} = props;
+  const {value = ''} = props;
 
   return (
     <View style={[props.style ? props.style : styles.containerDefault]}>

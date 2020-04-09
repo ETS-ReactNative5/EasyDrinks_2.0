@@ -9,7 +9,6 @@ import Drink_Details from './screen/drink_details';
 const Stack = createStackNavigator();
 
 export default function Routes(props) {
-  console.log({props});
   return (
     <NavigationContainer>
       <Stack.Navigator

@@ -25,7 +25,7 @@ export const FilterModal = (props) => {
   const {arrayOfGlass, arrayOfIgradients} = useSelector(
     (state) => state.filters,
   );
-  console.log({arrayOfGlass, arrayOfIgradients});
+
   const {modalVisible = false, filter = {}} = props;
 
   return (

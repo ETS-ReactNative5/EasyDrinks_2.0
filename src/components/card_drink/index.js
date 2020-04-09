@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import stylesCustom from './styles';
 
 export const CardDrink = (props) => {
-  let {item} = props;
+  const {item} = props;
 
   return (
     <TouchableScale onPress={props.onPress} activeScale={0.98}>

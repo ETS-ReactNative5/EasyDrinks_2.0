@@ -4,7 +4,7 @@ import TouchableScale from 'react-native-touchable-scale';
 import {colors} from '../../styles';
 
 export const Button = (props) => {
-  let {label} = props;
+  const {label} = props;
   return (
     <TouchableScale
       style={{

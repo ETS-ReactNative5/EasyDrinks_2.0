@@ -107,9 +107,9 @@ export default StyleSheet.create({
 
   semiCirculo: {
     width: 55,
-    minHeight: 110,
     elevation: 5,
     opacity: 0.15,
+    minHeight: 110,
     backgroundColor: '#fff',
     borderTopStartRadius: 60,
     borderBottomStartRadius: 60,
@@ -124,8 +124,8 @@ export default StyleSheet.create({
   containerIconArrow: {
     top: 0,
     right: 0,
-    bottom: 0,
     width: 50,
+    bottom: 0,
     position: 'absolute',
     alignItems: 'flex-end',
     justifyContent: 'center',

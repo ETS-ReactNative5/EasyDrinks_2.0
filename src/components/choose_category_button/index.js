@@ -8,7 +8,7 @@ import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const ChooseCategoryButton = (props) => {
-  let {label = '', icon = <View />} = props;
+  const {label = '', icon = <View />} = props;
 
   return (
     <TouchableScale onPress={props.onPress} activeScale={0.98}>

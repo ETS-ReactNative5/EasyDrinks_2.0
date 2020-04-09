@@ -4,7 +4,7 @@ import {Text} from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 
 export const ButtonFilterFast = (props) => {
-  let {label = '', checked = false, colorNoChecked = '#FFF'} = props;
+  const {label = '', checked = false, colorNoChecked = '#FFF'} = props;
 
   return (
     <TouchableScale
